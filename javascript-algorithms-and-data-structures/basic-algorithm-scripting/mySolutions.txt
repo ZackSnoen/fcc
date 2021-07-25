@@ -1,0 +1,253 @@
+-------------------------------------------------
+                  Zack Snoen
+              ZackSnoen@gmail.com
+ Copyright 2021, Zack Snoen, All rights reserved.
+-------------------------------------------------
+
+// Convert Celsius to Fahrenheit
+
+function convertToF(celsius) {
+  let fahrenheit = celsius * 9 / 5 + 32;
+  return fahrenheit;
+}
+
+convertToF(30);
+
+// Reverse a String
+
+function reverseString(str) {
+  let temp = [""];
+  for (let i = 0; i < str.length; i++) {
+    // Appends string char by char to reverse as we put into array
+    temp[0] = str[i] + temp[0];
+  }
+  return temp[0];
+}
+
+reverseString("hello");
+
+// Factorialize a Number
+
+function factorialize(num) {
+  // Easy recursive way to solve this
+  // Base case
+  if (num == 0) {
+    return 1;
+  } else {
+    return factorialize(num - 1) * num;
+  }
+}
+
+factorialize(5);
+
+// Find the Longest Word in a String
+
+function findLongestWordLength(str) {
+  // Splits string into array of substrings
+  let arr = str.split(" ");
+  let length = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].length > length) {
+      length = arr[i].length;
+    }
+  }
+  return length;
+}
+
+findLongestWordLength("The quick brown fox jumped over the lazy dog");
+
+// Return Largest Numbers in Arrays
+
+function largestOfFour(arr) {
+  let max;
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    // Have to do this to account for infinitely negative numbers
+    max = arr[i][0];
+    // We start at 1 because we assign 1st value to max
+    for (let j = 1; j < arr[i].length; j++) {
+      if (max < arr[i][j]) {
+        max = arr[i][j];
+      }
+    }
+    newArr.push(max);
+  }
+  return newArr;
+}
+
+largestOfFour([[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]]);
+
+// Confirm the Ending
+
+function confirmEnding(str, target) {
+  let flag = true;
+  for (let i = 0; i < target.length; i++) {
+    if (str[str.length - 1 - i] !== target[target.length - 1 - i]) {
+      return flag = false;
+    }
+  }
+  return flag;
+}
+
+confirmEnding("Bastian", "n");
+
+// Repeat a String Repeat a String
+
+function repeatStringNumTimes(str, num) {
+  let newStr = "";
+  if (num <= 0) {
+    return "";
+  } else {
+    for (let i = 0; i < num; i++) {
+      newStr += str;
+    }
+  }
+  return newStr;
+}
+
+repeatStringNumTimes("abc", 3);
+
+// Truncate a String
+
+function truncateString(str, num) {
+  return str.length > num ? str.slice(0,num) + '...' : str;
+}
+
+truncateString("A-tisket a-tasket A green and yellow basket", 8);
+
+// Finders Keepers
+
+function findElement(arr, func) {
+  for (let i = 0; i < arr.length; i++) {
+    if (func(arr[i])) {
+      return arr[i];
+    }
+  }
+  return undefined;
+}
+
+findElement([1, 2, 3, 4], num => num % 2 === 0);
+
+// Boo who
+
+function booWho(bool) {
+  return bool === true || bool === false ? true : false;
+}
+
+booWho(null);
+
+// Title Case a Sentence
+
+function titleCase(str) {
+  let newStr = "";
+  for (let i = 0; i < str.length; i++) {
+    // First letter should always be capitalized
+    if (i == 0) {
+      newStr += str[i].toUpperCase();
+    }
+    // next letter should be capitalized
+    else if (str[i] == " ") {
+      newStr += str[i];
+      newStr += str[i + 1].toUpperCase();
+      i++;
+    // letter should be lowercase
+    } else {
+      newStr += str[i].toLowerCase();
+    }
+  }
+  return newStr;
+}
+
+titleCase("I'm a little tea pot");
+
+// Slice and Splice
+
+function frankenSplice(arr1, arr2, n) {
+  // copy arr2 to temp
+  let temp = arr2.slice();
+  // insert at n, deleting 0 existing element, all elements in arr1
+  temp.splice(n, 0, ...arr1);
+  return temp;
+}
+
+frankenSplice([1, 2, 3], [4, 5, 6], 1);
+
+// Falsy Bouncer
+
+function bouncer(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (!arr[i]) {
+      arr.splice(i,1);
+      // Have to decrement because elements shift back 1
+      i--;
+    }
+  }
+  return arr;
+}
+
+bouncer([7, "ate", "", false, 9]);
+
+// Where do I Belong
+
+function getIndexToIns(arr, num) {
+  // n^2 bad sorting but it's a small hack
+  let min = 0;
+  for (let i = 0; i < arr.length - 1; i++) {
+    min = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      // check if new min from i index on
+      if (arr[j] < arr[min]) {
+        min = j;
+      }
+    }
+    // swap min value to front
+    let temp = arr[i];
+    arr[i] = arr[min];
+    arr[min] = temp;
+  }
+  
+  for (let i = 0; i < arr.length; i++) {
+    if (num <= arr[i]) {
+      return i;
+    }
+  }
+  return arr.length;
+}
+
+getIndexToIns([40, 60], 50);
+
+// Mutations
+
+function mutation(arr) {
+  let flag = false;
+  for (let i = 0; i < arr[1].length; i++) {
+    for (let j = 0; j < arr[0].length; j++) {
+      if (arr[0][j].toLowerCase() == arr[1][i].toLowerCase()) {
+        flag = true;
+      }
+    }
+    if (flag == false) {
+      return flag;
+    }
+    flag = false;
+  }
+  return true;
+}
+
+mutation(["hello", "hey"]);
+
+// Chunky Monkey
+
+function chunkArrayInGroups(arr, size) {
+  let newArr = [];
+  while(arr.length >= size) {
+    newArr.push(arr.splice(0,size));
+  }
+  if (arr.length > 0) {
+    newArr.push(arr);
+  }
+  return newArr;
+}
+
+chunkArrayInGroups(["a", "b", "c", "d"], 2);
+

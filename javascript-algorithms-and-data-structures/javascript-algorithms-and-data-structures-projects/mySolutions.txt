@@ -1,0 +1,169 @@
+-------------------------------------------------
+                  Zack Snoen
+              ZackSnoen@gmail.com
+ Copyright 2021, Zack Snoen, All rights reserved.
+-------------------------------------------------
+
+// Palindrome Checker
+
+function palindrome(str) {
+  let newStr = '';
+  // replace all non-alphanumeric chars
+  console.log(str.replace(/[^A-Za-z0-9]/g, ''))
+  newStr = (str.replace(/[^A-Za-z0-9]/g, ''));
+  console.log(newStr);
+  for (let i = 0; i < newStr.length / 2; i++) {
+    if (newStr[i].toLowerCase() !== newStr[newStr.length - 1 - i].toLowerCase()) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+
+palindrome("A man, a plan, a canal. Panama");
+
+// Roman Numeral Converter
+
+function convertToRoman(num) {
+  // hack solution, can create any number with this 'guide' dict
+  let roman = {
+    1: 'I',
+    4: 'IV',
+    5: 'V',
+    6: 'VI',
+    7: 'VII',
+    8: 'VIII',
+    9: 'IX',
+    10: 'X',
+    40: 'XL',
+    50: 'L',
+    60: 'LX',
+    70: 'LXX',
+    80: 'LXXX',
+    90: 'XC',
+    100: 'C',
+    400: 'CD',
+    500: 'D',
+    600: 'DC',
+    700: 'DCC',
+    800: 'DCCC',
+    900: 'CM',
+    1000: 'M'
+  }
+  let str = '' + num;
+  let romanNumeral = '';
+  // Loop through each digit in num
+  for (let i = 0; i < str.length; i++) {
+    // If it's a 0, just move on to the next digit
+    if (str[i] !== '0') {
+      // Turn digits into which place they are, 444 is 400, 40, and 4.
+      let temp = str[i];
+      for (let j = str.length - 1; j > i; j--) {
+        temp = temp.concat('0');
+      }
+
+      // Check if digit is in dict, just concat if so.
+      if (temp in roman) {
+        romanNumeral = romanNumeral.concat(roman[temp]);
+      } else {
+        // Otherwise, handle repeating a lower roman numeral to add up to digit
+        for (let k = 0; k < temp[0]; k++) {
+          romanNumeral = romanNumeral.concat(roman[temp / temp[0]]);
+        }
+      }
+    }
+  }
+  //console.log(romanNumeral);
+  return romanNumeral;
+}
+
+convertToRoman(36);
+
+// Caesars Cipher
+
+function rot13(str) {
+  let newStr = '';
+  let alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+  for (let i = 0; i < str.length; i++) {
+    let index = alphabet.indexOf(str[i]);
+    // If it is a letter
+    if (index !== -1) {
+      // handle looping around array, resetting to A = 0
+      if (index + 13 > 25) {
+        newStr = newStr.concat(alphabet[index + 13 - 26]);
+      // add 13 to index, add letter to str.
+      } else {
+        newStr = newStr.concat(alphabet[index + 13]);
+      }
+    // Not letter, just concat it.
+    } else {
+      newStr = newStr.concat(str[i]);
+    }
+  }
+  console.log(newStr);
+  return newStr;
+}
+
+rot13("SERR PBQR PNZC");
+
+// Telephone Number Validator
+
+function telephoneCheck(str) {
+  const expression = /^1?\s?(\(\d{3}\)|\d{3})[\-\s]?\d{3}[\-\s]?\d{4}$/;
+  return expression.test(str);
+}
+
+telephoneCheck("555-555-5555");
+
+// Cash Register
+
+function checkCashRegister(price, cash, cid) {
+  let changeOwed = cash - price;
+  let result = {};
+  let changeGiven = [];
+  // copy cid in case of CLOSED
+  const copyCid = cid.map(item => item.slice());
+  let worth = {"PENNY": 0.01, "NICKEL": 0.05, "DIME": 0.10, "QUARTER": 0.25, "ONE": 1, "FIVE": 5, "TEN": 10, "TWENTY": 20, "ONE HUNDRED": 100};
+  for (let i = cid.length - 1; i >= 0; i--) {
+    let count = 0;
+    // check if cid[i][0] is worth less than change due, so we don't overpay
+    // check if we have said change left in till
+    while (cid[i][1] > 0 && worth[cid[i][0]] <= changeOwed && changeOwed > 0) {
+      // subtract 1 unit
+      // Had to add toFixed(2) to fix rounding errors everywhere
+      cid[i][1] = (cid[i][1] - worth[cid[i][0]]).toFixed(2);
+      count++;
+      changeOwed = (changeOwed - worth[cid[i][0]]).toFixed(2);
+    }
+    // Add bills/coins and count given out to customer.
+    if (count !== 0) {
+      // Had to add *100/100 at the end to round of extra 0's
+      let temp = [cid[i][0], ((count * worth[cid[i][0]]).toFixed(2)*100/100)];
+      changeGiven.push(temp);
+    }
+  }
+  // failed
+  if (changeOwed != 0) {
+    return {status: "INSUFFICIENT_FUNDS", change: []};
+  } else {
+    // We need to check if till is exactly payout
+    for (let i = cid.length - 1; i >= 0; i--) {
+      // Till is not exactly payout, return OPEN
+      if (cid[i][1] != 0) {
+        result.status = "OPEN";
+        result.change = changeGiven;
+        return result;
+      }
+    }
+    // Till === payout, return what is in till
+    result.status = "CLOSED";
+    result.change = copyCid;
+    console.log(result);
+    return result;
+  }
+}
+
+checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+
