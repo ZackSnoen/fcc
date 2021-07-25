@@ -1,0 +1,7 @@
+var newArr = arrVar creates a reference not a copy in JS
+
+Make all computation in functions depend ONLY on args, not global vars
+
+Functions are considered first class objects in JavaScript, which means they can be used like any other object. They can be saved in variables, stored in an object, or passed as function arguments.
+
+

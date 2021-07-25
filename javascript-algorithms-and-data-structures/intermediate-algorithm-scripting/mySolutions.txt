@@ -1,0 +1,385 @@
+-------------------------------------------------
+                  Zack Snoen
+              ZackSnoen@gmail.com
+ Copyright 2021, Zack Snoen, All rights reserved.
+-------------------------------------------------
+
+// Sum All Numbers in a Range
+
+function sumAll(arr) {
+  if (arr[0] < arr[1]) {
+    return sumAllRecursive(arr[0], arr[1]);
+  } else {
+    return sumAllRecursive(arr[1], arr[0]);
+  }
+}
+
+// Helper recursive function, super simple.
+function sumAllRecursive(low, high) {
+  if (low === high) {
+    return low;
+  } else {
+    return high + sumAllRecursive(low, high - 1);
+  }
+}
+
+sumAll([1, 4]);
+
+// Diff Two Arrays
+
+function diffArray(arr1, arr2) {
+  return arr1.filter(item => !arr2.includes(item)).concat(arr2.filter(item => !arr1.includes(item)));
+}
+
+diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
+
+// Seek and Destroy
+
+function destroyer(arr, ...args) {
+  return arr.filter(item => !args.includes(item));
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3);
+
+// Wherefore art thou
+
+function whatIsInAName(collection, source) {
+  var arr = [];
+  // Only change code below this line
+  arr = (collection.filter(item => {
+    for (let [key, value] of Object.entries(source)) {
+      if (item[key] !== value) {
+        return false;
+      }
+    }
+    return true;
+  }));
+
+  // Only change code above this line
+  return arr;
+}
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+
+// Spinal Tap Case
+
+function spinalCase(str) {
+  return (str.replace(/([a-z])([A-Z])/g, '$1 $2').split(/[^A-Za-z0-9]/).join('-').toLowerCase());
+}
+
+spinalCase('This Is Spinal Tap');
+
+// Pig Latin
+
+function translatePigLatin(str) {
+  if (str[0] === 'a' || str[0] === 'e' || str[0] === 'i' || str[0] === 'o' || str[0] === 'u') {
+    console.log(str.concat('way'));
+    return str.concat('way');
+  }
+  return (str.replace(/(^[^aeiou]+)(\w*)/, '$2$1ay'));
+}
+
+translatePigLatin("rhythm");
+
+// Search and Replace
+
+function myReplace(str, before, after) {
+  if (before[0] === before[0].toUpperCase()) {
+    return str.replace(before, after.substr(0, 1).toUpperCase().concat(after.substr(1)));
+  } else {
+    return str.replace(before, after.substr(0, 1).toLowerCase().concat(after.substr(1)));
+  }
+}
+
+myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");
+
+// DNA Pairing
+
+function pairElement(str) {
+  let arr = [];
+  for (let i = 0; i < str.length; i++) {
+    switch (str[i]) {
+      case 'A':
+        arr.push(['A', 'T']);
+        break;
+      case 'T':
+        arr.push(['T', 'A']);
+        break;
+      case 'C':
+        arr.push(['C', 'G']);
+        break;
+      case 'G':
+        arr.push(['G', 'C']);
+        break;
+    }
+  }
+  console.log(arr);
+  return arr;
+}
+
+pairElement("GCG");
+
+// Missing letters
+
+function fearNotLetter(str) {
+  let alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  let index = alphabet.indexOf(str[0]);
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] !== alphabet[index + i]) {
+      return alphabet[index + i];
+    }
+  }
+  return undefined;
+}
+
+fearNotLetter("abce");
+
+// Sorted Union
+
+function uniteUnique(... args) {
+  let arr = [];
+  for (let i = 0; i < args.length; i++) {
+    for (let j = 0; j < args[i].length; j++) {
+      if (arr.indexOf(args[i][j]) === -1) {
+        arr.push(args[i][j]);
+      }
+    }
+  }
+  return arr;
+}
+
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
+
+// Convert HTML Entities
+
+function convertHTML(str) {
+  let conversion = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&apos;'
+  }
+  return (str.replace(/([&<>"'])/g, char => conversion[char]));
+}
+
+convertHTML("Dolce & Gabbana");
+
+// Sum All Odd Fibonacci Numbers
+
+function sumFibs(num) {
+  let fib1 = 1;
+  let fib2 = 1;
+  let fib3 = 2;
+  let sum = 2;
+  if (num < 0) {
+    return 0;
+  }
+  switch (num) {
+    case 0:
+      return 0;
+      break;
+    case 1:
+      return 2;
+      break;
+    case 2:
+      return 2;
+      break;
+    default:
+      while (num >= fib3) {
+        if (fib3 % 2 !== 0) {
+          sum += fib3
+        }
+        fib1 = fib2;
+        fib2 = fib3;
+        fib3 = fib1 + fib2;
+      }
+      return sum;
+      break;
+  }
+}
+
+sumFibs(4);
+
+// Sum All Primes
+
+function sumPrimes(num) {
+  let sum = 2;
+  let prime = true;
+  if (num < 0) {
+    return 0;
+  } else {
+    switch (num) {
+      case 0:
+        return 0;
+      case 1:
+        return 0;
+      case 2:
+        return 2;
+      default:
+        for (let i = 3; i <= num; i++) {
+          for (let j = 2; j < i; j++) {
+            // not prime
+            if (i % j === 0) {
+              prime = false;
+              break;
+            }
+          }
+          if (prime) {
+            sum += i
+          }
+          prime = true;
+        }
+        return sum;
+    }
+  }
+}
+
+sumPrimes(10);
+
+// Smallest Common Multiple
+
+function smallestCommons(arr) {
+  arr.sort(function(a, b){return a-b});
+  let newArr = [];
+  for (let i = arr[0]; i <= arr[1]; i++) {
+    newArr.push(i);
+  }
+  let multiple = arr[1];
+  while(true) {
+    //console.log(newArr.filter(item => multiple % item === 0));
+    if (newArr.filter(item => multiple % item === 0).length === newArr.length)
+    {
+      return multiple;
+    }
+    multiple++;
+  }
+}
+
+
+smallestCommons([1,5]);
+
+// Drop it
+
+function dropElements(arr, func) {
+  let i = 0;
+  while (arr) {
+    if (func(arr[i]) == true) {
+      return arr;
+    }
+    arr.shift();
+  }
+  return arr;
+}
+
+dropElements([1, 2, 3], function(n) {return n < 3; });
+
+// Steamroller
+
+function steamrollArray(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      // Recursively call next level of array
+      newArr.push(...steamrollArray(arr[i]));
+    } else {
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+
+steamrollArray([1, [2], [3, [[4]]]]);
+
+// Binary Agents
+
+function binaryAgent(str) {
+  let binToDecimal = [128, 64, 32, 16, 8, 4, 2, 1];
+  // Split each letter into array
+  let arr = str.split(" ");
+  for (let i = 0; i < arr.length; i++) {
+    let decimal = 0;
+    for (let j = 0; j < arr[i].length; j++) {
+      switch (arr[i][j]) {
+        case '0':
+          break;
+        case '1':
+          decimal += binToDecimal[j];
+      }
+    }
+    arr[i] = String.fromCharCode(decimal);
+  }
+  
+  return arr.join("");
+}
+
+binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111");
+
+// Everything Be True
+
+function truthCheck(collection, pre) {
+  return collection.filter(item => item[pre]).length === collection.length ? true : false;
+
+}
+
+truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex");
+
+// Arguments Optional
+
+function addTogether(...args) {
+  if (args.length == 1 && typeof args[0] == 'number') {
+    return y => typeof y == 'number' ? args[0] + y : undefined;
+  } else if (typeof args[0] == 'number' && typeof args[1] == 'number') {
+    return args[0] + args[1];
+  } else {
+    return undefined;
+  }
+}
+
+addTogether(2,3);
+
+// Make a Person
+
+var Person = function(firstAndLast) {
+  // Only change code below this line
+  var firstName = firstAndLast.split(' ')[0];
+  var lastName = firstAndLast.split(' ')[1];
+  // Complete the method below and implement the others similarly
+  this.getFirstName = function() {
+    return firstName;
+  }
+  this.getLastName = function() {
+    return lastName;
+  }
+  this.getFullName = function() {
+    return firstName.concat(' ', lastName);
+  }
+  this.setFirstName = function(name) {
+    firstName = name;
+  }
+  this.setLastName = function(name) {
+    lastName = name;
+  }
+  this.setFullName = function(name) {
+    firstName = name.split(' ')[0];
+    lastName = name.split(' ')[1];
+  }
+};
+
+var bob = new Person('Bob Ross');
+bob.getFullName();
+
+// Map the Debris
+
+function orbitalPeriod(arr) {
+  var GM = 398600.4418;
+  var earthRadius = 6367.4447;
+  arr.map(item => {
+    item.orbitalPeriod = Math.round(2 * Math.PI * Math.sqrt(Math.pow((earthRadius + item.avgAlt), 3)/GM));
+    delete item.avgAlt;
+  })
+  return arr;
+}
+
+orbitalPeriod([{name : "sputnik", avgAlt : 35873.5553}]);
+
