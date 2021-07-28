@@ -1,0 +1,48 @@
+Quick notes:
+
+Example of a page's layout
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta />
+  </head>
+  <body>
+    <div>
+    </div>
+  </body>
+</html>
+
+Metadata elements, such as link, meta, title, and style, typically go inside the head element.
+
+id attributes should be unique, common practice.
+
+styles of id's get added over class styles
+
+padding is the distance from elements content to the border
+margin is the space between an elements border and surrounding elements
+
+Complementary and Tertiary colors to create color schemes for websites
+
+fixed positioning for nav bar to stay as scrolling
+
+use main tag for main content, helps accessibility users
+
+article tag for stuff like blogs, forum posts, etc. individual content.
+
+A book is an article, each chapter is a section.
+
+Section tag is grouping thematically related content.
+
+<div> - groups content <section> - groups related content <article> - groups independent, self-contained content
+
+<nav> to wrap main nav links in page.
+
+<footer> Is primarily used to contain copyright information or links to related documents that usually sit at the bottom of a page.
+
+4.5:1 contrast ratio for normal text
+
+flex help
+https://www.w3.org/TR/css-flexbox-1/images/flex-direction-terms.svg
+
+
